@@ -1,9 +1,9 @@
 import React from "react";
 
-const Articles = ({navColor}) => {
+const Articles = ({ navColor }) => {
   return (
     <h1>
-      this is <span className={`bg-${navColor}-200`}> articles </span>page
+      this is <span className={`bg-${navColor}-200`}> Articles </span>page
     </h1>
   );
 };
