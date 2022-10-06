@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // pages
 import Articles from "./pages/Articles";
 import Notes from "./pages/Notes";
 import Twitter from "./pages/Twitter";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { articlesColor, notesColor, tweetsColor } from './features/navColor/navColorSlice'
+import { useSelector, useDispatch } from "react-redux";
 
 // const handleColorChange = () => {};
 
 function App() {
-  const [navColor, setNavColor] = useState("red");
   let location = useLocation();
+
+  const navColor = useSelector((state) => state.navColor.value);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     if (location.pathname === "/articles") {
-      setNavColor("red");
+      dispatch(articlesColor());
     } else if (location.pathname === "/notes") {
-      setNavColor("green");
+      dispatch(notesColor());
     } else if (location.pathname === "/tweets") {
-      setNavColor("blue");
+      dispatch(tweetsColor());
     } else {
-      setNavColor("red");
+      dispatch(notesColor());
     }
   }, [location.pathname]);
 
@@ -27,7 +32,7 @@ function App() {
     <>
       <nav>
         <div
-          className={`transition-colors  absolute w-20 h-screen flex bg-${navColor}-200 flex-col items-center justify-center`}>
+          className={`transition-colors absolute w-20 h-screen flex ${navColor} flex-col items-center justify-center`}>
           <Link to="/notes" className="p-5">
             Notes
           </Link>
