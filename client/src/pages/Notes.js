@@ -7,9 +7,6 @@ const Notes = () => {
 
   return (
     <>
-      <h1>
-        this is <span className={`${navColor}`}> Notes </span> page
-      </h1>
       <Note className="flex justify-center"/>
     </>
   );
