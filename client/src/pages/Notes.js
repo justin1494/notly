@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Note from "../components/Note";
+import Content from "../components/Content";
 
 const Notes = () => {
   const navColor = useSelector((state) => state.navColor.value);
@@ -8,7 +8,7 @@ const Notes = () => {
   return (
     <>
     <h1><span className={navColor}>Notes</span> page</h1>
-      <Note className="flex justify-center"/>
+      <Content className="flex justify-center"/>
     </>
   );
 };
