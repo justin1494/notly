@@ -21,7 +21,7 @@ const Content = () => {
   let currentPage;
 
   if (path === "/notes") {
-    currentPage = "Notes";
+    currentPage = "Notes"
   } else if (path === "/articles") {
     currentPage = "Articles";
   }
@@ -57,7 +57,9 @@ const Content = () => {
     }).then(() => handleNotesUpdate());
   };
 
+
   return (
+    
     <>
       <div className="flex justify-start items-start gap-10 flex-wrap">
         {listOfNotes.map((note) => {
@@ -66,12 +68,24 @@ const Content = () => {
               className="w-48 max-h-fit bg-slate-200 rounded-md overflow-hidden"
               data-id={note._id}
             >
-              <h2 className={`flex justify-center p-2 text-md font-bold ${navColor}`}>
+              <h2
+                className={`flex justify-center p-2 text-md font-bold ${navColor}`}
+              >
                 {note.title}
               </h2>
               <p className="p-5">{note.text}</p>
-           
-              
+              {path === "/articles" ? (
+                <a
+                  href={note.link}
+                  target="_blank"
+                  className="p-5"
+                  rel="noreferrer"
+                >
+                  {note.link}
+                </a>
+              ) : (
+                <></>
+              )}
               <button
                 onClick={(e) => {
                   deleteNote(e.target.parentElement.getAttribute("data-id"));
