@@ -31,7 +31,7 @@ const Note = () => {
   const deleteNote = (noteId) => {
     Axios.delete("http://localhost:3001/deleteNote", {
       data: { _id: noteId },
-    });
+    }).then(() => handleNotesUpdate());;
   };
 
   return (
@@ -48,7 +48,6 @@ const Note = () => {
               <p className="p-5">{note.text}</p>
               <button
                 onClick={(e) => {
-                  handleNotesUpdate();
                   deleteNote(e.target.parentElement.getAttribute("data-id"));
                 }}>
                 X
