@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const mongoose = require("mongoose");
-const NotesModel = require("./models/Notes");
+const NotesModel = require("./models/NotesModel");
+const ArticlesModel = require("./models/ArticlesModel")
 require("dotenv").config();
 
 const cors = require("cors");
@@ -12,6 +13,16 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.connect(process.env.DB_CONNECTION);
+
+app.get("/getArticles", (req, res) => {
+  ArticlesModel.find({}, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 app.get("/getNotes", (req, res) => {
   NotesModel.find({}, (err, result) => {

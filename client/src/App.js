@@ -22,6 +22,8 @@ function App() {
       dispatch(notesColor());
     } else if (location.pathname === "/tweets") {
       dispatch(tweetsColor());
+    } else {
+      dispatch(notesColor());
     }
   },);
 
