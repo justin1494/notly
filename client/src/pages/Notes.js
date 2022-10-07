@@ -7,6 +7,7 @@ const Notes = () => {
 
   return (
     <>
+    <h1><span className={navColor}>Notes</span> page</h1>
       <Note className="flex justify-center"/>
     </>
   );

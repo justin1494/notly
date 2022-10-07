@@ -9,12 +9,15 @@ const Note = () => {
 
   const [noteTitle, setNoteTitle] = useState("");
   const [noteText, setNoteText] = useState("");
+  const [noteId, setNoteId] = useState("");
+
+  const inputTitleRef = React.useRef();
+  const inputTextRef = React.useRef();
 
   const handleNotesUpdate = () => {
     Axios.get("http://localhost:3001/getNotes").then((response) => {
       dispatch(addNotes(response.data || 0));
     });
-    console.log("done");
   };
 
   useEffect(() => {
@@ -31,7 +34,16 @@ const Note = () => {
   const deleteNote = (noteId) => {
     Axios.delete("http://localhost:3001/deleteNote", {
       data: { _id: noteId },
-    }).then(() => handleNotesUpdate());;
+    }).then(() => handleNotesUpdate());
+  };
+
+  const handleNoteChange = () => {
+
+    Axios.put("http://localhost:3001/editNote", {
+      _id: noteId,
+      title: inputTitleRef.current.value,
+      text: inputTextRef.current.value,
+    }).then(() => handleNotesUpdate());
   };
 
   return (
@@ -51,6 +63,16 @@ const Note = () => {
                   deleteNote(e.target.parentElement.getAttribute("data-id"));
                 }}>
                 X
+              </button>
+              <button
+                onClick={(e) => {
+                  inputTitleRef.current.value =
+                    e.target.parentElement.children[0].innerText;
+                  inputTextRef.current.value =
+                    e.target.parentElement.children[1].innerText;
+                  setNoteId(e.target.parentElement.getAttribute("data-id"));
+                }}>
+                Edit
               </button>
             </div>
           );
@@ -76,6 +98,30 @@ const Note = () => {
             createNote();
           }}>
           Create User
+        </button>
+      </div>
+      <div className="flex gap-10 mt-20">
+        <input
+          type="text"
+          placeholder="Name2..."
+          onChange={(e) => {
+            setNoteTitle(e.target.value);
+          }}
+          ref={inputTitleRef}
+        />
+        <textarea
+          type="text"
+          placeholder="Age2..."
+          onChange={(e) => {
+            setNoteText(e.target.value);
+          }}
+          ref={inputTextRef}
+        />
+        <button
+          onClick={() => {
+            handleNoteChange();
+          }}>
+          Update Note
         </button>
       </div>
     </>
