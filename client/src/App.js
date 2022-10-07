@@ -7,7 +7,6 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { articlesColor, notesColor, tweetsColor } from './features/navColor/navColorSlice'
 import { useSelector, useDispatch } from "react-redux";
 
-// const handleColorChange = () => {};
 
 function App() {
   let location = useLocation();
@@ -23,10 +22,8 @@ function App() {
       dispatch(notesColor());
     } else if (location.pathname === "/tweets") {
       dispatch(tweetsColor());
-    } else {
-      dispatch(notesColor());
     }
-  }, [location.pathname]);
+  },);
 
   return (
     <>
@@ -44,7 +41,7 @@ function App() {
           </Link>
         </div>
       </nav>
-      <main className="ml-28">
+      <main className="h-screen w-screen pl-28 p-10 bg-slate-600 ">
         <Routes>
           <Route path="/" element={<Notes />} />
           <Route path="notes" element={<Notes navColor={navColor} />} />
