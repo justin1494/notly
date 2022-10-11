@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { addNotes } from "../features/listOfNotes/listOfNotesSlice";
+import { addNotes } from "../slices/listOfNotesSlice";
+import { addNoteTitle } from "../slices/noteTitleSlice";
+import { addNoteText } from "../slices/noteTextSlice";
+import { addNoteId } from "../slices/noteIdSlice";
 
 const Note = () => {
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
+  const noteTitle = useSelector((state) => state.noteTitle.value);
+  const noteText = useSelector((state) => state.noteText.value);
+  const noteId = useSelector((state) => state.noteId.value);
+
   const dispatch = useDispatch();
 
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteText, setNoteText] = useState("");
-  const [noteId, setNoteId] = useState("");
+  // const [noteTitle, setNoteTitle] = useState("");
+  // const [noteText, setNoteText] = useState("");
+  // const [noteId, setNoteId] = useState("");
 
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
@@ -67,7 +74,10 @@ const Note = () => {
                     e.target.parentElement.children[0].innerText;
                   inputTextRef.current.value =
                     e.target.parentElement.children[1].innerText;
-                  setNoteId(e.target.parentElement.getAttribute("data-id"));
+                  // setNoteId(e.target.parentElement.getAttribute("data-id"));
+                  dispatch(
+                    addNoteId(e.target.parentElement.getAttribute("data-id"))
+                  );
                 }}>
                 Edit
               </button>
@@ -80,14 +90,16 @@ const Note = () => {
           type="text"
           placeholder="Name..."
           onChange={(e) => {
-            setNoteTitle(e.target.value);
+            // setNoteTitle(e.target.value);
+            dispatch(addNoteTitle(e.target.value));
           }}
         />
         <textarea
           type="text"
           placeholder="Age..."
           onChange={(e) => {
-            setNoteText(e.target.value);
+            // setNoteText(e.target.value);
+            dispatch(addNoteText(e.target.value));
           }}
         />
         <button
@@ -102,7 +114,8 @@ const Note = () => {
           type="text"
           placeholder="Name2..."
           onChange={(e) => {
-            setNoteTitle(e.target.value);
+            // setNoteTitle(e.target.value);
+            dispatch(addNoteTitle(e.target.value));
           }}
           ref={inputTitleRef}
         />
@@ -110,7 +123,8 @@ const Note = () => {
           type="text"
           placeholder="Age2..."
           onChange={(e) => {
-            setNoteText(e.target.value);
+            // setNoteText(e.target.value);
+            dispatch(addNoteText(e.target.value));
           }}
           ref={inputTextRef}
         />

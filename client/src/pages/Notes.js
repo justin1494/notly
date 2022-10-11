@@ -1,14 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Note from "../components/Note";
+import Modal from "../components/Modal";
 
 const Notes = () => {
   const navColor = useSelector((state) => state.navColor.value);
+  const noteTitle = useSelector((state) => state.noteTitle.value);
+
+  console.log(noteTitle);
 
   return (
     <>
-    <h1><span className={navColor}>Notes</span> page</h1>
-      <Note className="flex justify-center"/>
+      {/* <Modal /> */}
+      <h1>
+        <span className={navColor}>Notes</span> page
+      </h1>
+      <Note className="flex justify-center" />
     </>
   );
 };

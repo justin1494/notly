@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { addArticle } from "../features/listOfArticles/listOfArticlesSlice";
+import { addArticle } from "../slices/listOfArticlesSlice";
 
 const Article = () => {
   const listOfArticles = useSelector((state) => state.listOfArticles.value);

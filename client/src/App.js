@@ -4,16 +4,14 @@ import Articles from "./pages/Articles";
 import Notes from "./pages/Notes";
 import Twitter from "./pages/Twitter";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { articlesColor, notesColor, tweetsColor } from './features/navColor/navColorSlice'
+import { articlesColor, notesColor, tweetsColor } from "./slices/navColorSlice";
 import { useSelector, useDispatch } from "react-redux";
-
 
 function App() {
   let location = useLocation();
 
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     if (location.pathname === "/articles") {
@@ -25,7 +23,7 @@ function App() {
     } else {
       dispatch(notesColor());
     }
-  },);
+  });
 
   return (
     <>
