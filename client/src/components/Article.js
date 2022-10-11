@@ -16,7 +16,7 @@ const Article = () => {
   const inputTextRef = React.useRef();
 
   const handleNotesUpdate = () => {
-    Axios.get("http://localhost:3001/getArticles").then((response) => {
+    Axios.get("http://localhost:3001/articles").then((response) => {
       dispatch(addArticle(response.data || 0));
     });
   };
