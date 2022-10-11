@@ -103,11 +103,12 @@ const Note = () => {
           }}
         /> */}
         <button
+        className="text-white"
           onClick={() => {
             // createNote();
             hideModalHandler();
           }}>
-          Create User
+          Create new note
         </button>
       </div>
       {/* <div className="flex gap-10 mt-20">
