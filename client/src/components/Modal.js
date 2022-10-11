@@ -1,10 +1,12 @@
 import React from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { setModalHidden } from "../slices/modalHiddenSlice";
-import { addNoteTitle } from "../slices/noteTitleSlice";
-import { addNoteText } from "../slices/noteTextSlice";
-import { addNotes } from "../slices/listOfNotesSlice";
+import {
+  setModalHidden,
+  addNoteTitle,
+  addNoteText,
+  addNotes,
+} from "../slices/slicesExport";
 
 const Modal = () => {
   const modalHidden = useSelector((state) => state.modalHidden.value);
@@ -12,6 +14,10 @@ const Modal = () => {
   const noteTitle = useSelector((state) => state.noteTitle.value);
   const noteText = useSelector((state) => state.noteText.value);
   const dispatch = useDispatch();
+
+  // refs
+  const inputTitleRef = React.useRef();
+  const inputTextRef = React.useRef();
 
   const createNote = () => {
     Axios.post("http://localhost:3001/notes", {
@@ -26,6 +32,11 @@ const Modal = () => {
     });
   };
 
+  const handleModalInputClear = () => {
+    inputTextRef.current.value = "";
+    inputTitleRef.current.value = "";
+  };
+
   return (
     <div
       className={`${modalHidden} absolute flex justify-center items-center left-0 top-0 h-full w-full pl-28 bg-black/50`}>
@@ -35,6 +46,7 @@ const Modal = () => {
           <input
             type="text"
             placeholder="Note Title..."
+            ref={inputTitleRef}
             onChange={(e) => {
               dispatch(addNoteTitle(e.target.value));
             }}
@@ -42,6 +54,7 @@ const Modal = () => {
           <textarea
             type="text"
             placeholder="Note Text..."
+            ref={inputTextRef}
             onChange={(e) => {
               dispatch(addNoteText(e.target.value));
             }}
@@ -50,6 +63,7 @@ const Modal = () => {
             onClick={() => {
               createNote();
               dispatch(setModalHidden("hidden"));
+              handleModalInputClear();
             }}>
             Create Note
           </button>
@@ -58,6 +72,7 @@ const Modal = () => {
           className="absolute top-2 right-5"
           onClick={() => {
             dispatch(setModalHidden("hidden"));
+            handleModalInputClear();
           }}>
           X
         </button>
