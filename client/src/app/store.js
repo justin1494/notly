@@ -5,6 +5,7 @@ import listOfArticlesSlice from "../slices/listOfArticlesSlice";
 import noteTitleSlice from "../slices/noteTitleSlice";
 import noteTextSlice from "../slices/noteTextSlice";
 import noteIdSlice from "../slices/noteIdSlice";
+import modalHiddenSlice from "../slices/modalHiddenSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     noteTitle: noteTitleSlice,
     noteText: noteTextSlice,
     noteId: noteIdSlice,
+    modalHidden: modalHiddenSlice,
   },
 });

@@ -11,7 +11,7 @@ const Notes = () => {
 
   return (
     <>
-      {/* <Modal /> */}
+      <Modal/>
       <h1>
         <span className={navColor}>Notes</span> page
       </h1>

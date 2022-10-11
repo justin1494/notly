@@ -5,6 +5,7 @@ import { addNotes } from "../slices/listOfNotesSlice";
 import { addNoteTitle } from "../slices/noteTitleSlice";
 import { addNoteText } from "../slices/noteTextSlice";
 import { addNoteId } from "../slices/noteIdSlice";
+import { setModalHidden } from "../slices/modalHiddenSlice";
 
 const Note = () => {
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
@@ -13,11 +14,6 @@ const Note = () => {
   const noteId = useSelector((state) => state.noteId.value);
 
   const dispatch = useDispatch();
-
-  // const [noteTitle, setNoteTitle] = useState("");
-  // const [noteText, setNoteText] = useState("");
-  // const [noteId, setNoteId] = useState("");
-
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
 
@@ -48,6 +44,10 @@ const Note = () => {
     Axios.patch(`http://localhost:3001/notes/${noteId}`, {
       title: inputTitleRef.current.value,
     }).then(() => handleNotesUpdate());
+  };
+
+  const hideModalHandler = () => {
+    dispatch(setModalHidden(""));
   };
 
   return (
@@ -86,7 +86,7 @@ const Note = () => {
         })}
       </div>
       <div className="mt-48 flex gap-10">
-        <input
+        {/* <input
           type="text"
           placeholder="Name..."
           onChange={(e) => {
@@ -101,15 +101,16 @@ const Note = () => {
             // setNoteText(e.target.value);
             dispatch(addNoteText(e.target.value));
           }}
-        />
+        /> */}
         <button
           onClick={() => {
-            createNote();
+            // createNote();
+            hideModalHandler();
           }}>
           Create User
         </button>
       </div>
-      <div className="flex gap-10 mt-20">
+      {/* <div className="flex gap-10 mt-20">
         <input
           type="text"
           placeholder="Name2..."
@@ -134,7 +135,7 @@ const Note = () => {
           }}>
           Update Note
         </button>
-      </div>
+      </div> */}
     </>
   );
 };
