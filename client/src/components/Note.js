@@ -15,7 +15,7 @@ const Note = () => {
   const inputTextRef = React.useRef();
 
   const handleNotesUpdate = () => {
-    Axios.get("http://localhost:3001/getNotes").then((response) => {
+    Axios.get("http://localhost:3001/notes").then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
@@ -25,24 +25,21 @@ const Note = () => {
   }, []);
 
   const createNote = () => {
-    Axios.post("http://localhost:3001/createNote", {
+    Axios.post("http://localhost:3001/notes", {
       title: noteTitle,
       text: noteText,
     }).then(() => handleNotesUpdate());
   };
 
   const deleteNote = (noteId) => {
-    Axios.delete("http://localhost:3001/deleteNote", {
-      data: { _id: noteId },
-    }).then(() => handleNotesUpdate());
+    Axios.delete(`http://localhost:3001/notes/${noteId}`).then(() =>
+      handleNotesUpdate()
+    );
   };
 
   const handleNoteChange = () => {
-
-    Axios.put("http://localhost:3001/editNote", {
-      _id: noteId,
+    Axios.patch(`http://localhost:3001/notes/${noteId}`, {
       title: inputTitleRef.current.value,
-      text: inputTextRef.current.value,
     }).then(() => handleNotesUpdate());
   };
 
