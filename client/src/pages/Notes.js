@@ -5,13 +5,10 @@ import Modal from "../components/Modal";
 
 const Notes = () => {
   const navColor = useSelector((state) => state.navColor.value);
-  const noteTitle = useSelector((state) => state.noteTitle.value);
-
-  console.log(noteTitle);
 
   return (
     <>
-      <Modal/>
+      <Modal />
       <h1>
         <span className={navColor}>Notes</span> page
       </h1>

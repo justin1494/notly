@@ -46,7 +46,7 @@ const Note = () => {
     }).then(() => handleNotesUpdate());
   };
 
-  const hideModalHandler = () => {
+  const showModalHandler = () => {
     dispatch(setModalHidden(""));
   };
 
@@ -70,14 +70,21 @@ const Note = () => {
               </button>
               <button
                 onClick={(e) => {
-                  inputTitleRef.current.value =
-                    e.target.parentElement.children[0].innerText;
-                  inputTextRef.current.value =
-                    e.target.parentElement.children[1].innerText;
+                  // inputTitleRef.current.value =
+                  //   e.target.parentElement.children[0].innerText;
+                  // inputTextRef.current.value =
+                  //   e.target.parentElement.children[1].innerText;
                   // setNoteId(e.target.parentElement.getAttribute("data-id"));
                   dispatch(
                     addNoteId(e.target.parentElement.getAttribute("data-id"))
                   );
+                  dispatch(
+                    addNoteTitle(e.target.parentElement.children[0].innerText)
+                  );
+                  dispatch(
+                    addNoteText(e.target.parentElement.children[1].innerText)
+                  );
+                  showModalHandler();
                 }}>
                 Edit
               </button>
@@ -103,10 +110,11 @@ const Note = () => {
           }}
         /> */}
         <button
-        className="text-white"
+          className="text-white"
           onClick={() => {
-            // createNote();
-            hideModalHandler();
+            showModalHandler();
+            dispatch(addNoteTitle(""));
+            dispatch(addNoteText(""));
           }}>
           Create new note
         </button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -26,6 +26,12 @@ const Modal = () => {
     }).then(() => handleNotesUpdate());
   };
 
+  // const updateNote = () => {
+  //   Axios.patch(`http://localhost:3001/notes/${noteId}`, {
+  //     title: inputTitleRef.current.value,
+  //   }).then(() => handleNotesUpdate());
+  // };
+
   const handleNotesUpdate = () => {
     Axios.get("http://localhost:3001/notes").then((response) => {
       dispatch(addNotes(response.data || 0));
@@ -47,6 +53,7 @@ const Modal = () => {
             type="text"
             placeholder="Note Title..."
             ref={inputTitleRef}
+            value={noteTitle}
             onChange={(e) => {
               dispatch(addNoteTitle(e.target.value));
             }}
@@ -55,6 +62,7 @@ const Modal = () => {
             type="text"
             placeholder="Note Text..."
             ref={inputTextRef}
+            value={noteText}
             onChange={(e) => {
               dispatch(addNoteText(e.target.value));
             }}
