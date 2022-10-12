@@ -8,28 +8,31 @@ import {
   addNoteText,
   addNotes,
   clearNoteId,
+  setArticleLink,
 } from "../slices/slicesExport";
 
 const Modal = () => {
   const location = useLocation();
   const currentPath = location.pathname.slice(1);
 
-  let link;
-
-  if (currentPath === "articles") {
-    link = `https://google.pl`;
-  }
-
   const modalHidden = useSelector((state) => state.modalHidden.value);
   const navColor = useSelector((state) => state.navColor.value);
   const noteTitle = useSelector((state) => state.noteTitle.value);
   const noteText = useSelector((state) => state.noteText.value);
   const noteId = useSelector((state) => state.noteId.value);
+  const articleLink = useSelector((state) => state.articleLink.value);
   const dispatch = useDispatch();
 
   // refs
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
+  const inputLinkRef = React.useRef();
+
+  let link;
+
+  if (currentPath === "articles") {
+    link = articleLink;
+  }
 
   const handleNotesUpdate = () => {
     Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
@@ -49,12 +52,14 @@ const Modal = () => {
     Axios.patch(`http://localhost:3001/${currentPath}/${noteId}`, {
       title: inputTitleRef.current.value,
       text: inputTextRef.current.value,
+      link: inputLinkRef.current.value,
     }).then(() => handleNotesUpdate());
   };
 
   const handleModalInputClear = () => {
     inputTextRef.current.value = "";
     inputTitleRef.current.value = "";
+    inputLinkRef.current.value = "";
   };
 
   return (
@@ -81,6 +86,16 @@ const Modal = () => {
               dispatch(addNoteText(e.target.value));
             }}
           />
+          {currentPath === "articles" && (
+            <input
+              type="text"
+              placeholder="article link"
+              ref={inputLinkRef}
+              onChange={(e) => {
+                dispatch(setArticleLink(e.target.value));
+              }}
+            />
+          )}
           {noteId === "" ? (
             <button
               onClick={() => {
