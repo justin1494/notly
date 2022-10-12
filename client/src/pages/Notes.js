@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Note from "../components/Note";
+import Content from "../components/Content";
 import Modal from "../components/Modal";
 
 const Notes = () => {
@@ -12,7 +12,7 @@ const Notes = () => {
       <h1>
         <span className={navColor}>Notes</span> page
       </h1>
-      <Note className="flex justify-center" />
+      <Content className="flex justify-center" />
     </>
   );
 };

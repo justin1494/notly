@@ -9,10 +9,13 @@ export const noteIdSlice = createSlice({
     addNoteId: (state, action) => {
       state.value = action.payload;
     },
+    clearNoteId: (state) => {
+      state.value = "";
+    },
   },
 });
 
 // // Action creators are generated for each case reducer function
-export const { addNoteId } = noteIdSlice.actions;
+export const { addNoteId, clearNoteId } = noteIdSlice.actions;
 
 export default noteIdSlice.reducer;

@@ -9,13 +9,8 @@ import { setModalHidden } from "../slices/modalHiddenSlice";
 
 const Note = () => {
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
-  const noteTitle = useSelector((state) => state.noteTitle.value);
-  const noteText = useSelector((state) => state.noteText.value);
-  const noteId = useSelector((state) => state.noteId.value);
-
   const dispatch = useDispatch();
-  const inputTitleRef = React.useRef();
-  const inputTextRef = React.useRef();
+
 
   const handleNotesUpdate = () => {
     Axios.get("http://localhost:3001/notes").then((response) => {
@@ -27,23 +22,10 @@ const Note = () => {
     handleNotesUpdate();
   }, []);
 
-  const createNote = () => {
-    Axios.post("http://localhost:3001/notes", {
-      title: noteTitle,
-      text: noteText,
-    }).then(() => handleNotesUpdate());
-  };
-
   const deleteNote = (noteId) => {
     Axios.delete(`http://localhost:3001/notes/${noteId}`).then(() =>
       handleNotesUpdate()
     );
-  };
-
-  const handleNoteChange = () => {
-    Axios.patch(`http://localhost:3001/notes/${noteId}`, {
-      title: inputTitleRef.current.value,
-    }).then(() => handleNotesUpdate());
   };
 
   const showModalHandler = () => {
@@ -70,11 +52,6 @@ const Note = () => {
               </button>
               <button
                 onClick={(e) => {
-                  // inputTitleRef.current.value =
-                  //   e.target.parentElement.children[0].innerText;
-                  // inputTextRef.current.value =
-                  //   e.target.parentElement.children[1].innerText;
-                  // setNoteId(e.target.parentElement.getAttribute("data-id"));
                   dispatch(
                     addNoteId(e.target.parentElement.getAttribute("data-id"))
                   );
@@ -93,22 +70,6 @@ const Note = () => {
         })}
       </div>
       <div className="mt-48 flex gap-10">
-        {/* <input
-          type="text"
-          placeholder="Name..."
-          onChange={(e) => {
-            // setNoteTitle(e.target.value);
-            dispatch(addNoteTitle(e.target.value));
-          }}
-        />
-        <textarea
-          type="text"
-          placeholder="Age..."
-          onChange={(e) => {
-            // setNoteText(e.target.value);
-            dispatch(addNoteText(e.target.value));
-          }}
-        /> */}
         <button
           className="text-white"
           onClick={() => {
@@ -119,32 +80,6 @@ const Note = () => {
           Create new note
         </button>
       </div>
-      {/* <div className="flex gap-10 mt-20">
-        <input
-          type="text"
-          placeholder="Name2..."
-          onChange={(e) => {
-            // setNoteTitle(e.target.value);
-            dispatch(addNoteTitle(e.target.value));
-          }}
-          ref={inputTitleRef}
-        />
-        <textarea
-          type="text"
-          placeholder="Age2..."
-          onChange={(e) => {
-            // setNoteText(e.target.value);
-            dispatch(addNoteText(e.target.value));
-          }}
-          ref={inputTextRef}
-        />
-        <button
-          onClick={() => {
-            handleNoteChange();
-          }}>
-          Update Note
-        </button>
-      </div> */}
     </>
   );
 };

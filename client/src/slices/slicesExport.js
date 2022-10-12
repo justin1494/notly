@@ -2,7 +2,7 @@ import { addArticle } from "./listOfArticlesSlice";
 import { addNotes } from "./listOfNotesSlice";
 import { setModalHidden } from "./modalHiddenSlice";
 import { notesColor, articlesColor, tweetsColor } from "./navColorSlice";
-import { addNoteId } from "./noteIdSlice";
+import { addNoteId, clearNoteId } from "./noteIdSlice";
 import { addNoteText } from "./noteTextSlice";
 import { addNoteTitle } from "./noteTitleSlice";
 
@@ -14,6 +14,7 @@ export {
   articlesColor,
   tweetsColor,
   addNoteId,
+  clearNoteId,
   addNoteText,
   addNoteTitle,
 };

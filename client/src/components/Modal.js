@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -6,6 +6,7 @@ import {
   addNoteTitle,
   addNoteText,
   addNotes,
+  clearNoteId,
 } from "../slices/slicesExport";
 
 const Modal = () => {
@@ -13,11 +14,19 @@ const Modal = () => {
   const navColor = useSelector((state) => state.navColor.value);
   const noteTitle = useSelector((state) => state.noteTitle.value);
   const noteText = useSelector((state) => state.noteText.value);
+  const noteId = useSelector((state) => state.noteId.value);
   const dispatch = useDispatch();
 
   // refs
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
+
+  
+  const handleNotesUpdate = () => {
+    Axios.get("http://localhost:3001/notes").then((response) => {
+      dispatch(addNotes(response.data || 0));
+    });
+  };
 
   const createNote = () => {
     Axios.post("http://localhost:3001/notes", {
@@ -26,16 +35,11 @@ const Modal = () => {
     }).then(() => handleNotesUpdate());
   };
 
-  // const updateNote = () => {
-  //   Axios.patch(`http://localhost:3001/notes/${noteId}`, {
-  //     title: inputTitleRef.current.value,
-  //   }).then(() => handleNotesUpdate());
-  // };
-
-  const handleNotesUpdate = () => {
-    Axios.get("http://localhost:3001/notes").then((response) => {
-      dispatch(addNotes(response.data || 0));
-    });
+  const updateNote = () => {
+    Axios.patch(`http://localhost:3001/notes/${noteId}`, {
+      title: inputTitleRef.current.value,
+      text: inputTextRef.current.value,
+    }).then(() => handleNotesUpdate());
   };
 
   const handleModalInputClear = () => {
@@ -67,20 +71,34 @@ const Modal = () => {
               dispatch(addNoteText(e.target.value));
             }}
           />
-          <button
-            onClick={() => {
-              createNote();
-              dispatch(setModalHidden("hidden"));
-              handleModalInputClear();
-            }}>
-            Create Note
-          </button>
+          {noteId === "" ? (
+            <button
+              onClick={() => {
+                createNote();
+                dispatch(setModalHidden("hidden"));
+                handleModalInputClear();
+                dispatch(clearNoteId());
+              }}>
+              Create Note
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                updateNote();
+                dispatch(setModalHidden("hidden"));
+                handleModalInputClear();
+                dispatch(clearNoteId());
+              }}>
+              Update Note
+            </button>
+          )}
         </div>
         <button
           className="absolute top-2 right-5"
           onClick={() => {
             dispatch(setModalHidden("hidden"));
             handleModalInputClear();
+            dispatch(clearNoteId());
           }}>
           X
         </button>

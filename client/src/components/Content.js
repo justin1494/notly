@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { addNotes } from "../features/listOfNotes/listOfNotesSlice";
+import { addNotes } from "../slices/listOfNotesSlice";
+import { addNoteTitle } from "../slices/noteTitleSlice";
+import { addNoteText } from "../slices/noteTextSlice";
+import { addNoteId } from "../slices/noteIdSlice";
+import { setModalHidden } from "../slices/modalHiddenSlice";
 
-const Content = () => {
+const Note = () => {
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
-  const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteText, setNoteText] = useState("");
-  const [noteId, setNoteId] = useState("");
-
-  const inputTitleRef = React.useRef();
-  const inputTextRef = React.useRef();
-
-  const location = useLocation();
-  const path = location.pathname;
-  let currentPage;
-
-  if (path === "/notes") {
-    currentPage = "Notes"
-  } else if (path === "/articles") {
-    currentPage = "Articles";
-  }
-
   const handleNotesUpdate = () => {
-    Axios.get(`http://localhost:3001/get${currentPage}`).then((response) => {
+    Axios.get("http://localhost:3001/notes").then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
@@ -36,72 +21,47 @@ const Content = () => {
     handleNotesUpdate();
   }, []);
 
-  const createNote = () => {
-    Axios.post("http://localhost:3001/createNote", {
-      title: noteTitle,
-      text: noteText,
-    }).then(() => handleNotesUpdate());
-  };
-
   const deleteNote = (noteId) => {
-    Axios.delete("http://localhost:3001/deleteNote", {
-      data: { _id: noteId },
-    }).then(() => handleNotesUpdate());
+    Axios.delete(`http://localhost:3001/notes/${noteId}`).then(() =>
+      handleNotesUpdate()
+    );
   };
 
-  const handleNoteChange = () => {
-    Axios.put("http://localhost:3001/editNote", {
-      _id: noteId,
-      title: inputTitleRef.current.value,
-      text: inputTextRef.current.value,
-    }).then(() => handleNotesUpdate());
+  const showModalHandler = () => {
+    dispatch(setModalHidden(""));
   };
-
 
   return (
-    
     <>
       <div className="flex justify-start items-start gap-10 flex-wrap">
         {listOfNotes.map((note) => {
           return (
             <div
-              className="w-48 max-h-fit bg-slate-200 rounded-md overflow-hidden"
-              data-id={note._id}
-            >
-              <h2
-                className={`flex justify-center p-2 text-md font-bold ${navColor}`}
-              >
+              className="w-48 max-h-fit bg-orange-200 rounded-md overflow-hidden"
+              data-id={note._id}>
+              <h2 className="flex justify-center p-2 text-md font-bold bg-green-200">
                 {note.title}
               </h2>
               <p className="p-5">{note.text}</p>
-              {path === "/articles" ? (
-                <a
-                  href={note.link}
-                  target="_blank"
-                  className="p-5"
-                  rel="noreferrer"
-                >
-                  {note.link}
-                </a>
-              ) : (
-                <></>
-              )}
               <button
                 onClick={(e) => {
                   deleteNote(e.target.parentElement.getAttribute("data-id"));
-                }}
-              >
+                }}>
                 X
               </button>
               <button
                 onClick={(e) => {
-                  inputTitleRef.current.value =
-                    e.target.parentElement.children[0].innerText;
-                  inputTextRef.current.value =
-                    e.target.parentElement.children[1].innerText;
-                  setNoteId(e.target.parentElement.getAttribute("data-id"));
-                }}
-              >
+                  dispatch(
+                    addNoteId(e.target.parentElement.getAttribute("data-id"))
+                  );
+                  dispatch(
+                    addNoteTitle(e.target.parentElement.children[0].innerText)
+                  );
+                  dispatch(
+                    addNoteText(e.target.parentElement.children[1].innerText)
+                  );
+                  showModalHandler();
+                }}>
                 Edit
               </button>
             </div>
@@ -109,55 +69,18 @@ const Content = () => {
         })}
       </div>
       <div className="mt-48 flex gap-10">
-        <input
-          type="text"
-          placeholder="Name..."
-          onChange={(e) => {
-            setNoteTitle(e.target.value);
-          }}
-        />
-        <textarea
-          type="text"
-          placeholder="Age..."
-          onChange={(e) => {
-            setNoteText(e.target.value);
-          }}
-        />
         <button
+          className="text-white"
           onClick={() => {
-            createNote();
-          }}
-        >
-          Create User
-        </button>
-      </div>
-      <div className="flex gap-10 mt-20">
-        <input
-          type="text"
-          placeholder="Name2..."
-          onChange={(e) => {
-            setNoteTitle(e.target.value);
-          }}
-          ref={inputTitleRef}
-        />
-        <textarea
-          type="text"
-          placeholder="Age2..."
-          onChange={(e) => {
-            setNoteText(e.target.value);
-          }}
-          ref={inputTextRef}
-        />
-        <button
-          onClick={() => {
-            handleNoteChange();
-          }}
-        >
-          Update Note
+            showModalHandler();
+            dispatch(addNoteTitle(""));
+            dispatch(addNoteText(""));
+          }}>
+          Create new note
         </button>
       </div>
     </>
   );
 };
 
-export default Content;
+export default Note;
