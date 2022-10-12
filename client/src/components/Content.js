@@ -13,14 +13,15 @@ import {
 
 const Note = () => {
   const location = useLocation();
-  const currentPath = location.pathname;
+  const currentPath = location.pathname.slice(1);
+  console.log(currentPath);
 
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
   const handleNotesUpdate = () => {
-    Axios.get(`http://localhost:3001${currentPath}`).then((response) => {
+    Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
@@ -30,8 +31,8 @@ const Note = () => {
   }, []);
 
   const deleteNote = (noteId) => {
-    Axios.delete(`http://localhost:3001${currentPath}/${noteId}`).then(
-      () => handleNotesUpdate()
+    Axios.delete(`http://localhost:3001/${currentPath}/${noteId}`).then(() =>
+      handleNotesUpdate()
     );
   };
 
@@ -52,6 +53,15 @@ const Note = () => {
                 {note.title}
               </h2>
               <p className="p-5">{note.text}</p>
+              {currentPath === "articles" && (
+                <a
+                  href={note.link}
+                  target="_blank"
+                  className="p-5"
+                  rel="noreferrer">
+                  {note.link}
+                </a>
+              )}
               <button
                 onClick={(e) => {
                   deleteNote(e.target.parentElement.getAttribute("data-id"));

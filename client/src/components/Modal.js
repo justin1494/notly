@@ -17,7 +17,7 @@ const Modal = () => {
   let link;
 
   if (currentPath === "articles") {
-    link = `link: https://google.pl`;
+    link = `https://google.pl`;
   }
 
   const modalHidden = useSelector((state) => state.modalHidden.value);
