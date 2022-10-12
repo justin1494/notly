@@ -11,7 +11,7 @@ const ArticlesSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    required: true,
+    required: false,
   },
 
 

@@ -5,6 +5,11 @@ import { notesColor, articlesColor, tweetsColor } from "./navColorSlice";
 import { addNoteId, clearNoteId } from "./noteIdSlice";
 import { addNoteText } from "./noteTextSlice";
 import { addNoteTitle } from "./noteTitleSlice";
+import {
+  notesPage,
+  articlesPage,
+  tweetsPage,
+} from "./currentPageSlice";
 
 export {
   addArticle,
@@ -17,4 +22,7 @@ export {
   clearNoteId,
   addNoteText,
   addNoteTitle,
+  notesPage,
+  articlesPage,
+  tweetsPage,
 };

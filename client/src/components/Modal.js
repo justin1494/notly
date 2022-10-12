@@ -1,6 +1,7 @@
 import React from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   setModalHidden,
   addNoteTitle,
@@ -10,6 +11,15 @@ import {
 } from "../slices/slicesExport";
 
 const Modal = () => {
+  const location = useLocation();
+  const currentPath = location.pathname.slice(1);
+
+  let link;
+
+  if (currentPath === "articles") {
+    link = `link: https://google.pl`;
+  }
+
   const modalHidden = useSelector((state) => state.modalHidden.value);
   const navColor = useSelector((state) => state.navColor.value);
   const noteTitle = useSelector((state) => state.noteTitle.value);
@@ -21,22 +31,22 @@ const Modal = () => {
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
 
-  
   const handleNotesUpdate = () => {
-    Axios.get("http://localhost:3001/notes").then((response) => {
+    Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
 
-  const createNote = () => {
-    Axios.post("http://localhost:3001/notes", {
+  const createNote = (link) => {
+    Axios.post(`http://localhost:3001/${currentPath}`, {
       title: noteTitle,
       text: noteText,
+      link,
     }).then(() => handleNotesUpdate());
   };
 
   const updateNote = () => {
-    Axios.patch(`http://localhost:3001/notes/${noteId}`, {
+    Axios.patch(`http://localhost:3001/${currentPath}/${noteId}`, {
       title: inputTitleRef.current.value,
       text: inputTextRef.current.value,
     }).then(() => handleNotesUpdate());
@@ -74,7 +84,7 @@ const Modal = () => {
           {noteId === "" ? (
             <button
               onClick={() => {
-                createNote();
+                createNote(link);
                 dispatch(setModalHidden("hidden"));
                 handleModalInputClear();
                 dispatch(clearNoteId());

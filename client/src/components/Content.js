@@ -1,18 +1,26 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { addNotes } from "../slices/listOfNotesSlice";
-import { addNoteTitle } from "../slices/noteTitleSlice";
-import { addNoteText } from "../slices/noteTextSlice";
-import { addNoteId } from "../slices/noteIdSlice";
-import { setModalHidden } from "../slices/modalHiddenSlice";
+import { useLocation } from "react-router-dom";
+
+import {
+  addNotes,
+  addNoteTitle,
+  addNoteText,
+  addNoteId,
+  setModalHidden,
+} from "../slices/slicesExport";
 
 const Note = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
+  const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
   const handleNotesUpdate = () => {
-    Axios.get("http://localhost:3001/notes").then((response) => {
+    Axios.get(`http://localhost:3001${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
@@ -22,8 +30,8 @@ const Note = () => {
   }, []);
 
   const deleteNote = (noteId) => {
-    Axios.delete(`http://localhost:3001/notes/${noteId}`).then(() =>
-      handleNotesUpdate()
+    Axios.delete(`http://localhost:3001${currentPath}/${noteId}`).then(
+      () => handleNotesUpdate()
     );
   };
 
@@ -39,7 +47,8 @@ const Note = () => {
             <div
               className="w-48 max-h-fit bg-orange-200 rounded-md overflow-hidden"
               data-id={note._id}>
-              <h2 className="flex justify-center p-2 text-md font-bold bg-green-200">
+              <h2
+                className={`flex justify-center p-2 text-md font-bold ${navColor}`}>
                 {note.title}
               </h2>
               <p className="p-5">{note.text}</p>

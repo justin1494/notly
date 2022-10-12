@@ -4,8 +4,17 @@ import Articles from "./pages/Articles";
 import Notes from "./pages/Notes";
 import Twitter from "./pages/Twitter";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { articlesColor, notesColor, tweetsColor } from "./slices/navColorSlice";
+import {
+  articlesColor,
+  notesColor,
+  tweetsColor,
+  notesPage,
+  articlesPage,
+  tweetsPage,
+} from "./slices/slicesExport";
 import { useSelector, useDispatch } from "react-redux";
+
+// jest globalny state, który zmienia się w zalezności od strony na której się jest. Obszedłem to stosując useLocation(), ale na razie state zostawiam w razie czego. Nazwa globalnego state to currentPage
 
 function App() {
   let location = useLocation();
@@ -16,12 +25,16 @@ function App() {
   useEffect(() => {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
+      dispatch(articlesPage());
     } else if (location.pathname === "/notes") {
       dispatch(notesColor());
+      dispatch(notesPage());
     } else if (location.pathname === "/tweets") {
       dispatch(tweetsColor());
+      dispatch(tweetsPage());
     } else {
       dispatch(notesColor());
+      dispatch(notesPage());
     }
   });
 

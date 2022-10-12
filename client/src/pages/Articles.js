@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Content from "../components/Content";
+import Article from "../components/Article";
 import Modal from "../components/Modal";
 
 
@@ -13,7 +13,7 @@ const Articles = () => {
       <h1>
         this is <span className={`${navColor}`}> Articles </span>page
       </h1>
-      <Content className="flex justify-center" />
+      <Article className="flex justify-center" />
     </>
   );
 };
