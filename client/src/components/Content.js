@@ -9,6 +9,7 @@ import {
   addNoteText,
   addNoteId,
   setModalHidden,
+  setArticleLink,
 } from "../slices/slicesExport";
 
 const Content = () => {
@@ -81,6 +82,13 @@ const Content = () => {
                   dispatch(
                     addNoteText(e.target.parentElement.children[1].innerText)
                   );
+                  currentPath === "articles" &&
+                    dispatch(
+                      setArticleLink(
+                        e.target.parentElement.children[2].attributes[0].value
+                      )
+                    );
+
                   showModalHandler();
                 }}>
                 Edit
@@ -96,6 +104,7 @@ const Content = () => {
             showModalHandler();
             dispatch(addNoteTitle(""));
             dispatch(addNoteText(""));
+            dispatch(setArticleLink(""));
           }}>
           Create new note
         </button>

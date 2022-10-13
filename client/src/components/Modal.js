@@ -67,7 +67,9 @@ const Modal = () => {
   const handleModalInputClear = () => {
     inputTextRef.current.value = "";
     inputTitleRef.current.value = "";
-    inputLinkRef.current.value = "";
+    if (currentPath === "articles") {
+      inputLinkRef.current.value = "";
+    }
   };
 
   return (
@@ -99,6 +101,7 @@ const Modal = () => {
               type="text"
               placeholder="article link"
               ref={inputLinkRef}
+              value={articleLink}
               onChange={(e) => {
                 dispatch(setArticleLink(e.target.value));
               }}
