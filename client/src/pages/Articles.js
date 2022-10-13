@@ -3,13 +3,12 @@ import { useSelector } from "react-redux";
 import Article from "../components/Article";
 import Modal from "../components/Modal";
 
-
 const Articles = () => {
   const navColor = useSelector((state) => state.navColor.value);
 
   return (
     <>
-    <Modal />
+      <Modal />
       <h1>
         this is <span className={`${navColor}`}> Articles </span>page
       </h1>

@@ -11,12 +11,10 @@ import {
   setModalHidden,
 } from "../slices/slicesExport";
 
-const Note = () => {
+const Content = () => {
   const location = useLocation();
   const currentPath =
     location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
-
-  console.log(currentPath);
 
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
   const navColor = useSelector((state) => state.navColor.value);
@@ -29,6 +27,8 @@ const Note = () => {
   };
 
   useEffect(() => {
+    // first it makes listOfNotes a blank array, then handleNotesUpdate takes care of updating listOfNotes. Thanks to that, there is no "lag", after changing pages.
+    dispatch(addNotes([]));
     handleNotesUpdate();
   }, []);
 
@@ -61,7 +61,7 @@ const Note = () => {
                   target="_blank"
                   className="p-5"
                   rel="noreferrer">
-                  {note.link}
+                  Open article
                 </a>
               )}
               <button
@@ -104,4 +104,4 @@ const Note = () => {
   );
 };
 
-export default Note;
+export default Content;

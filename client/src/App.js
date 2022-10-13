@@ -2,15 +2,12 @@ import React, { useEffect } from "react";
 // pages
 import Articles from "./pages/Articles";
 import Notes from "./pages/Notes";
-import Twitter from "./pages/Twitter";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import {
   articlesColor,
   notesColor,
-  tweetsColor,
   notesPage,
   articlesPage,
-  tweetsPage,
 } from "./slices/slicesExport";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -29,9 +26,6 @@ function App() {
     } else if (location.pathname === "/notes") {
       dispatch(notesColor());
       dispatch(notesPage());
-    } else if (location.pathname === "/tweets") {
-      dispatch(tweetsColor());
-      dispatch(tweetsPage());
     } else {
       dispatch(notesColor());
       dispatch(notesPage());
@@ -49,9 +43,6 @@ function App() {
           <Link to="/articles" className="p-5">
             Articles
           </Link>
-          <Link to="/tweets" className="p-5">
-            Tweets
-          </Link>
         </div>
       </nav>
       <main className="h-screen w-screen pl-28 p-10 bg-slate-600 ">
@@ -59,7 +50,7 @@ function App() {
           <Route path="/" element={<Notes />} />
           <Route path="notes" element={<Notes navColor={navColor} />} />
           <Route path="articles" element={<Articles navColor={navColor} />} />
-          <Route path="tweets" element={<Twitter navColor={navColor} />} />
+
         </Routes>
       </main>
     </>
