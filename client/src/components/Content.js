@@ -21,6 +21,24 @@ const Content = () => {
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
+  // icons
+
+  const xMark = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  );
+
   const handleNotesUpdate = () => {
     Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
@@ -45,33 +63,37 @@ const Content = () => {
 
   return (
     <>
-      <div className="flex justify-start items-start gap-10 flex-wrap">
+      <div className=" flex justify-start items-start gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
           return (
             <div
-              className="w-48 max-h-fit bg-orange-200 rounded-md overflow-hidden"
+              className="relative flex flex-col items-center gap-5 w-48 h-fit pb-9 bg-orange-200 rounded-md "
               data-id={note._id}>
               <h2
-                className={`flex justify-center p-2 text-md font-bold ${navColor}`}>
+                className={`text-center p-2 text-md font-bold rounded-md w-full drop-shadow-md ${navColor}`}>
                 {note.title}
               </h2>
-              <p className="p-5">{note.text}</p>
+              <p className="text-center ">{note.text}</p>
               {currentPath === "articles" && (
                 <a
+                  className="text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md"
                   href={note.link}
                   target="_blank"
-                  className="p-5"
                   rel="noreferrer">
                   Open article
                 </a>
               )}
               <button
+                className="flex justify-center items-center absolute -top-3 -right-2 w-7 h-7 bg-slate-100 rounded-full drop-shadow-md"
                 onClick={(e) => {
-                  deleteNote(e.target.parentElement.getAttribute("data-id"));
+                  deleteNote(
+                    e.currentTarget.parentElement.getAttribute("data-id")
+                  );
                 }}>
-                X
+                {xMark}
               </button>
               <button
+                className="flex justify-center items-center absolute -bottom-3 left-1/2 -translate-x-2/4 w-16 h-7 bg-slate-100 rounded-full drop-shadow-md"
                 onClick={(e) => {
                   dispatch(
                     addNoteId(e.target.parentElement.getAttribute("data-id"))
