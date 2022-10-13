@@ -3,17 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 export const navColorSlice = createSlice({
   name: "navColor",
   initialState: {
-    value: '"bg-green-200"',
+    value: '"bg-green-"',
   },
   reducers: {
     notesColor: state => {
-        state.value = 'bg-green-200'
+        state.value = 'bg-green-'
     },
     articlesColor: state => {
-        state.value = 'bg-red-200'
+        state.value = 'bg-red-'
     },
     tweetsColor: state => {
-        state.value = 'bg-blue-200'
+        state.value = 'bg-blue-'
     }
   },
 });

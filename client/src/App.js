@@ -62,13 +62,14 @@ function App() {
     </svg>
   );
 
-  const iconsStyles = "flex flex-col items-center gap-2 p-5 hover:scale-110 ease-in duration-200"
+  const iconsStyles =
+    "flex flex-col items-center gap-2 p-5 hover:scale-110 ease-in duration-200";
 
   return (
     <>
       <nav>
         <div
-          className={`transition-colors absolute w-24 h-screen flex ${navColor} flex-col items-center justify-center`}>
+          className={`transition-colors absolute w-24 h-screen flex ${navColor}200 flex-col items-center justify-center`}>
           <Link to="/notes" className={iconsStyles}>
             {notesIcon}
             <p>Notes</p>
