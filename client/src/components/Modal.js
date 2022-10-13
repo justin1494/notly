@@ -49,11 +49,19 @@ const Modal = () => {
   };
 
   const updateNote = () => {
-    Axios.patch(`http://localhost:3001/${currentPath}/${noteId}`, {
-      title: inputTitleRef.current.value,
-      text: inputTextRef.current.value,
-      link: inputLinkRef.current.value,
-    }).then(() => handleNotesUpdate());
+    Axios.patch(
+      `http://localhost:3001/${currentPath}/${noteId}`,
+      currentPath === "articles"
+        ? {
+            title: inputTitleRef.current.value,
+            text: inputTextRef.current.value,
+            link: inputLinkRef.current.value,
+          }
+        : {
+            title: inputTitleRef.current.value,
+            text: inputTextRef.current.value,
+          }
+    ).then(() => handleNotesUpdate());
   };
 
   const handleModalInputClear = () => {

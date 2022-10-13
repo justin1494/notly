@@ -13,7 +13,9 @@ import {
 
 const Note = () => {
   const location = useLocation();
-  const currentPath = location.pathname.slice(1);
+  const currentPath =
+    location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
+
   console.log(currentPath);
 
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
