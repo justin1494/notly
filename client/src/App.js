@@ -19,6 +19,7 @@ function App() {
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
@@ -63,28 +64,31 @@ function App() {
   );
 
   const iconsStyles =
-    "flex flex-col items-center gap-2 p-5 hover:scale-110 ease-in duration-200";
+    "flex flex-col w-20 h-28 items-center gap-2 p-5 hover:scale-110 ease-in duration-200 rounded-full hover:underline underline-offset-8 decoration-4 duration-150";
+
 
   return (
     <>
       <nav>
         <div
-          className={`transition-colors absolute w-24 h-screen flex ${navColor}200 flex-col items-center justify-center`}>
-          <Link to="/notes" className={iconsStyles}>
+          className={`transition-colors absolute w-24 h-screen flex ${navColor} flex-col items-center justify-center`}>
+          <Link
+            to="/notes"
+            className={`${iconsStyles} decoration-green-200 `}>
             {notesIcon}
-            <p>Notes</p>
+            <p className="">Notes</p>
           </Link>
-          <Link to="/articles" className={iconsStyles}>
+          <Link to="/articles" className={`${iconsStyles} decoration-red-200`}>
             {articlesIcon}
             <p>Articles</p>
           </Link>
         </div>
       </nav>
-      <main className="h-screen w-screen pl-28 p-10 bg-slate-600 ">
+      <main className="h-screen w-screen pl-36 p-10 bg-slate-600 ">
         <Routes>
           <Route path="/" element={<Notes />} />
-          <Route path="notes" element={<Notes navColor={navColor} />} />
-          <Route path="articles" element={<Articles navColor={navColor} />} />
+          <Route path="notes" element={<Notes />} />
+          <Route path="articles" element={<Articles />} />
         </Routes>
       </main>
     </>

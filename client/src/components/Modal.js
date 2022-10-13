@@ -72,10 +72,11 @@ const Modal = () => {
     }
   };
 
+
   return (
     <div
       className={`${modalHidden} absolute flex justify-center items-center left-0 top-0 h-full w-full pl-28 bg-black/50`}>
-      <div className={`relative h-1/4 w-96 ${navColor}200`}>
+      <div className={`relative h-1/4 w-96 ${navColor}`}>
         <div className="flex flex-col items-center justify-center h-full gap-6">
           <p>Make new note</p>
           <input
