@@ -19,7 +19,6 @@ function App() {
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
@@ -66,17 +65,16 @@ function App() {
   const iconsStyles =
     "flex flex-col w-20 h-28 items-center gap-2 p-5 hover:scale-110 ease-in duration-200 rounded-full hover:underline underline-offset-8 decoration-4 duration-150";
 
+  const hoverScaleAnimation = "hover:scale-90 duration-300";
 
   return (
     <>
       <nav>
         <div
-          className={`transition-colors absolute w-24 h-screen flex ${navColor} flex-col items-center justify-center`}>
-          <Link
-            to="/notes"
-            className={`${iconsStyles} decoration-green-200 `}>
+          className={`fixed transition-colors w-24 h-screen flex ${navColor} flex-col items-center justify-center`}>
+          <Link to="/notes" className={`${iconsStyles} decoration-green-200 `}>
             {notesIcon}
-            <p className="">Notes</p>
+            <p>Notes</p>
           </Link>
           <Link to="/articles" className={`${iconsStyles} decoration-red-200`}>
             {articlesIcon}
@@ -84,11 +82,17 @@ function App() {
           </Link>
         </div>
       </nav>
-      <main className="h-screen w-screen pl-36 p-10 bg-slate-600 ">
+      <main className="w-full min-h-screen pl-36 p-10 bg-slate-600 ">
         <Routes>
           <Route path="/" element={<Notes />} />
-          <Route path="notes" element={<Notes />} />
-          <Route path="articles" element={<Articles />} />
+          <Route
+            path="notes"
+            element={<Notes hoverScaleAnimation={hoverScaleAnimation} />}
+          />
+          <Route
+            path="articles"
+            element={<Articles hoverScaleAnimation={hoverScaleAnimation} />}
+          />
         </Routes>
       </main>
     </>

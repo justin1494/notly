@@ -11,7 +11,7 @@ import {
   setArticleLink,
 } from "../slices/slicesExport";
 
-const Modal = () => {
+const Modal = ({ hoverScaleAnimation }) => {
   const location = useLocation();
   const currentPath = location.pathname.slice(1);
 
@@ -72,14 +72,30 @@ const Modal = () => {
     }
   };
 
+  const xMark = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  );
 
   return (
     <div
-      className={`${modalHidden} absolute flex justify-center items-center left-0 top-0 h-full w-full pl-28 bg-black/50`}>
-      <div className={`relative h-1/4 w-96 ${navColor}`}>
-        <div className="flex flex-col items-center justify-center h-full gap-6">
-          <p>Make new note</p>
+      className={`${modalHidden} fixed flex justify-center items-center left-0 top-0 h-full w-full pl-28 bg-black/50 `}>
+      <div className={`relative h-96 w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
+        <div className="flex flex-col items-center justify-center h-full gap-8">
+          <p className="text-xl font-bold">Make new note</p>
           <input
+            className="w-9/12 rounded-md p-2"
             type="text"
             placeholder="Note Title..."
             ref={inputTitleRef}
@@ -89,6 +105,7 @@ const Modal = () => {
             }}
           />
           <textarea
+            className="w-9/12 rounded-md p-2"
             type="text"
             placeholder="Note Text..."
             ref={inputTextRef}
@@ -99,8 +116,9 @@ const Modal = () => {
           />
           {currentPath === "articles" && (
             <input
+              className="w-9/12 rounded-md p-2"
               type="text"
-              placeholder="article link"
+              placeholder="Article link..."
               ref={inputLinkRef}
               value={articleLink}
               onChange={(e) => {
@@ -110,6 +128,7 @@ const Modal = () => {
           )}
           {noteId === "" ? (
             <button
+              className={`text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md ${hoverScaleAnimation}`}
               onClick={() => {
                 createNote(link);
                 dispatch(setModalHidden("hidden"));
@@ -120,6 +139,7 @@ const Modal = () => {
             </button>
           ) : (
             <button
+            className={`text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md ${hoverScaleAnimation}`}
               onClick={() => {
                 updateNote();
                 dispatch(setModalHidden("hidden"));
@@ -131,13 +151,13 @@ const Modal = () => {
           )}
         </div>
         <button
-          className="absolute top-2 right-5"
+          className={`flex justify-center items-center absolute -top-3 -right-2 w-10 h-10 bg-slate-300 ${hoverScaleAnimation} rounded-full drop-shadow-md`}
           onClick={() => {
             dispatch(setModalHidden("hidden"));
             handleModalInputClear();
             dispatch(clearNoteId());
           }}>
-          X
+          {xMark}
         </button>
       </div>
     </div>

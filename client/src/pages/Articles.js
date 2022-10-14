@@ -2,12 +2,12 @@ import React from "react";
 import Article from "../components/Article";
 import Modal from "../components/Modal";
 
-const Articles = () => {
+const Articles = ({hoverScaleAnimation}) => {
 
   return (
     <>
       <Article className="flex justify-center" />
-      <Modal />
+      <Modal hoverScaleAnimation={hoverScaleAnimation} />
     </>
   );
 };
