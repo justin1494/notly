@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const modalHiddenSlice = createSlice({
   name: "modalHidden",
   initialState: {
-    value: "",
+    value: "hidden",
   },
   reducers: {
     setModalHidden: (state, action) => {

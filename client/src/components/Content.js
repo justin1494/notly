@@ -40,7 +40,7 @@ const Content = () => {
   );
 
   const handleNotesUpdate = () => {
-    Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
+    Axios.get(`http://192.168.0.73:3001/${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
@@ -52,7 +52,7 @@ const Content = () => {
   }, []);
 
   const deleteNote = (noteId) => {
-    Axios.delete(`http://localhost:3001/${currentPath}/${noteId}`).then(() =>
+    Axios.delete(`http://192.168.0.73:3001/${currentPath}/${noteId}`).then(() =>
       handleNotesUpdate()
     );
   };
@@ -65,11 +65,11 @@ const Content = () => {
 
   return (
     <>
-      <div className="flex h-full justify-start items-start gap-10 flex-wrap drop-shadow-md">
+      <div className="flex h-full w-full sm:justify-start justify-center items-center gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
           return (
             <div
-              className="relative flex flex-col items-center gap-5 w-80 h-fit pb-9 bg-white rounded-md "
+              className="relative flex flex-col items-center gap-5 w-64 lg:w-80 h-fit pb-9 bg-white rounded-md "
               data-id={note._id}>
               <h2
                 className={`text-center p-2 text-md font-bold rounded-md w-full drop-shadow-md ${navColor}`}>
@@ -129,14 +129,14 @@ const Content = () => {
       </div>
       <div className="mt-48 flex gap-10">
         <button
-          className={`fixed bottom-14 left-36 ${hoverScaleAnimation} p-2 rounded-md ${navColor}`}
+          className={`fixed sm:bottom-14 bottom-4 sm:left-36 right-5 w-max sm:border-none border-solid border-white	border-4	${hoverScaleAnimation} p-2 px-4 rounded-md ${navColor} z-20`}
           onClick={() => {
             showModalHandler();
             dispatch(addNoteTitle(""));
             dispatch(addNoteText(""));
             dispatch(setArticleLink(""));
           }}>
-          Create new {currentPath.slice(0,-1)}
+          Create new {currentPath.slice(0, -1)}
         </button>
       </div>
     </>

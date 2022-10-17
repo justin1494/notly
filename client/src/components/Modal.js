@@ -35,13 +35,13 @@ const Modal = ({ hoverScaleAnimation }) => {
   }
 
   const handleNotesUpdate = () => {
-    Axios.get(`http://localhost:3001/${currentPath}`).then((response) => {
+    Axios.get(`http://192.168.0.73:3001/${currentPath}`).then((response) => {
       dispatch(addNotes(response.data || 0));
     });
   };
 
   const createNote = (link) => {
-    Axios.post(`http://localhost:3001/${currentPath}`, {
+    Axios.post(`http://192.168.0.73:3001/${currentPath}`, {
       title: noteTitle,
       text: noteText,
       link,
@@ -50,7 +50,7 @@ const Modal = ({ hoverScaleAnimation }) => {
 
   const updateNote = () => {
     Axios.patch(
-      `http://localhost:3001/${currentPath}/${noteId}`,
+      `http://192.168.0.73:3001/${currentPath}/${noteId}`,
       currentPath === "articles"
         ? {
             title: inputTitleRef.current.value,
@@ -90,8 +90,9 @@ const Modal = ({ hoverScaleAnimation }) => {
 
   return (
     <div
-      className={`${modalHidden} fixed flex justify-center items-center left-0 top-0 h-full w-full pl-28 bg-black/50 `}>
-      <div className={`relative h-96 w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
+      className={`${modalHidden} fixed flex justify-center items-center left-0 top-0 h-full w-full sm:pl-28 bg-black/50 `}>
+      <div
+        className={`relative h-96 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
         <div className="flex flex-col items-center justify-center h-full gap-8">
           <p className="text-xl font-bold">Make new note</p>
           <input
@@ -139,7 +140,7 @@ const Modal = ({ hoverScaleAnimation }) => {
             </button>
           ) : (
             <button
-            className={`text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md ${hoverScaleAnimation}`}
+              className={`text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md ${hoverScaleAnimation}`}
               onClick={() => {
                 updateNote();
                 dispatch(setModalHidden("hidden"));
