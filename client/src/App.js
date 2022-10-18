@@ -63,7 +63,7 @@ function App() {
   );
 
   const iconsStyles =
-    "flex flex-col w-20 h-28 items-center justify-center gap-2 sm:p-5 pl-10 hover:scale-110 ease-in duration-200 rounded-full hover:underline underline-offset-8 decoration-4 duration-150";
+    "flex flex-col sm:w-20 sm:h-28 items-center justify-center gap-2 sm:p-5 hover:scale-110 ease-in duration-200 sm:rounded-full hover:underline underline-offset-8 decoration-4 duration-150";
 
   const hoverScaleAnimation = "hover:scale-90 duration-300";
 
@@ -71,7 +71,7 @@ function App() {
     <>
       <nav>
         <div
-          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-0 gap-5 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
+          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-0 gap-10 pl-6 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
           <Link to="/notes" className={`${iconsStyles} decoration-green-200 `}>
             {notesIcon}
             <p>Notes</p>
@@ -82,7 +82,7 @@ function App() {
           </Link>
         </div>
       </nav>
-      <main className="w-screen min-h-screen sm:pl-36 p-10 bg-slate-600 ">
+      <main className="w-full min-h-screen sm:pl-36 p-10 bg-slate-600 ">
         <Routes>
           <Route path="/" element={<Notes />} />
           <Route
