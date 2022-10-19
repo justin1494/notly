@@ -71,7 +71,7 @@ function App() {
     <>
       <nav>
         <div
-          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-0 gap-10 pl-6 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
+          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-0 gap-10 sm:pl-0 pl-6 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
           <Link to="/notes" className={`${iconsStyles} decoration-green-200 `}>
             {notesIcon}
             <p>Notes</p>

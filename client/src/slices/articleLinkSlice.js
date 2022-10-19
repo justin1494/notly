@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const articleLinkSlice = createSlice({
   name: "articleLink",
   initialState: {
-    value: "google.pl",
+    value: "",
   },
   reducers: {
     setArticleLink: (state, action) => {

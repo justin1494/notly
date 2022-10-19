@@ -65,7 +65,8 @@ const Content = () => {
 
   return (
     <>
-      <div className="flex h-full w-full sm:justify-start justify-center items-center gap-10 flex-wrap drop-shadow-md">
+      <h1 className="text-center mb-10 text-4xl">{currentPath}</h1>
+      <div className="flex h-full w-full sm:justify-start justify-center items-start gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
           return (
             <div

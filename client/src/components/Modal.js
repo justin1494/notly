@@ -27,6 +27,7 @@ const Modal = ({ hoverScaleAnimation }) => {
   const inputTitleRef = React.useRef();
   const inputTextRef = React.useRef();
   const inputLinkRef = React.useRef();
+  const warningRef = React.useRef();
 
   let link;
 
@@ -40,22 +41,44 @@ const Modal = ({ hoverScaleAnimation }) => {
     });
   };
 
-  const createNote = (link) => {
-    Axios.post(`http://192.168.0.73:3001/${currentPath}`, {
-      title: noteTitle,
-      text: noteText,
-      link,
-    }).then(() => handleNotesUpdate());
+  const createNote = () => {
+    linkCheck();
+    if (noteTitle !== "" && noteText !== "" && link !== "") {
+      Axios.post(`http://192.168.0.73:3001/${currentPath}`, {
+        title: noteTitle,
+        text: noteText,
+        link: link,
+      })
+        .then(() => handleNotesUpdate())
+        .then(() => dispatch(setModalHidden("hidden")))
+        .then(() => handleModalInputClear())
+        .then(() => dispatch(clearNoteId()))
+        .then(() => warningRef.current.classList.add("invisible"));
+    } else {
+      warningRef.current.classList.remove("invisible");
+    }
+  };
+
+  const linkCheck = () => {
+    if (
+      inputLinkRef.current.value.includes("https://") ||
+      inputLinkRef.current.value.includes("http://")
+    ) {
+      link = inputLinkRef.current.value;
+    } else {
+      link = `https://${inputLinkRef.current.value}`;
+    }
   };
 
   const updateNote = () => {
+    linkCheck();
     Axios.patch(
       `http://192.168.0.73:3001/${currentPath}/${noteId}`,
       currentPath === "articles"
         ? {
             title: inputTitleRef.current.value,
             text: inputTextRef.current.value,
-            link: inputLinkRef.current.value,
+            link: link,
           }
         : {
             title: inputTitleRef.current.value,
@@ -92,7 +115,7 @@ const Modal = ({ hoverScaleAnimation }) => {
     <div
       className={`${modalHidden} fixed flex justify-center items-center left-0 top-0 h-full w-full sm:pl-28 bg-black/50 `}>
       <div
-        className={`relative h-96 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
+        className={`relative h-1/3 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
         <div className="flex flex-col items-center justify-center h-full gap-8">
           <p className="text-xl font-bold">Make new note</p>
           <input
@@ -127,14 +150,14 @@ const Modal = ({ hoverScaleAnimation }) => {
               }}
             />
           )}
+          <p className="text-red-700 font-bold invisible" ref={warningRef}>
+            You have to fill out all the fields!
+          </p>
           {noteId === "" ? (
             <button
               className={`text-center px-4 py-1 bg-slate-100 rounded-full w-fit drop-shadow-md ${hoverScaleAnimation}`}
               onClick={() => {
-                createNote(link);
-                dispatch(setModalHidden("hidden"));
-                handleModalInputClear();
-                dispatch(clearNoteId());
+                createNote();
               }}>
               Create Note
             </button>
@@ -151,6 +174,7 @@ const Modal = ({ hoverScaleAnimation }) => {
             </button>
           )}
         </div>
+
         <button
           className={`flex justify-center items-center absolute -top-3 -right-2 w-10 h-10 bg-slate-300 ${hoverScaleAnimation} rounded-full drop-shadow-md`}
           onClick={() => {
