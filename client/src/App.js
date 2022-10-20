@@ -84,7 +84,7 @@ function App() {
       </nav>
       <main className="w-full min-h-screen sm:pl-36 p-10 bg-slate-600 ">
         <Routes>
-          <Route path="/" element={<Notes />} />
+          <Route path="/*" element={<Notes />} />
           <Route
             path="notes"
             element={<Notes hoverScaleAnimation={hoverScaleAnimation} />}
