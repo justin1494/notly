@@ -40,9 +40,11 @@ const Content = () => {
   );
 
   const handleNotesUpdate = () => {
-    Axios.get(`http://192.168.0.73:3001/${currentPath}`).then((response) => {
-      dispatch(addNotes(response.data || 0));
-    });
+    Axios.get(`https://notly-app.herokuapp.com//${currentPath}`).then(
+      (response) => {
+        dispatch(addNotes(response.data || 0));
+      }
+    );
   };
 
   useEffect(() => {
@@ -52,9 +54,9 @@ const Content = () => {
   }, []);
 
   const deleteNote = (noteId) => {
-    Axios.delete(`http://192.168.0.73:3001/${currentPath}/${noteId}`).then(() =>
-      handleNotesUpdate()
-    );
+    Axios.delete(
+      `https://notly-app.herokuapp.com//${currentPath}/${noteId}`
+    ).then(() => handleNotesUpdate());
   };
 
   const showModalHandler = () => {

@@ -36,15 +36,17 @@ const Modal = ({ hoverScaleAnimation }) => {
   }
 
   const handleNotesUpdate = () => {
-    Axios.get(`http://192.168.0.73:3001/${currentPath}`).then((response) => {
-      dispatch(addNotes(response.data || 0));
-    });
+    Axios.get(`https://notly-app.herokuapp.com//${currentPath}`).then(
+      (response) => {
+        dispatch(addNotes(response.data || 0));
+      }
+    );
   };
 
   const createNote = () => {
     linkCheck();
     if (noteTitle !== "" && noteText !== "" && link !== "") {
-      Axios.post(`http://192.168.0.73:3001/${currentPath}`, {
+      Axios.post(`https://notly-app.herokuapp.com//${currentPath}`, {
         title: noteTitle,
         text: noteText,
         link: link,
@@ -73,7 +75,7 @@ const Modal = ({ hoverScaleAnimation }) => {
   const updateNote = () => {
     linkCheck();
     Axios.patch(
-      `http://192.168.0.73:3001/${currentPath}/${noteId}`,
+      `https://notly-app.herokuapp.com//${currentPath}/${noteId}`,
       currentPath === "articles"
         ? {
             title: inputTitleRef.current.value,
