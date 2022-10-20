@@ -10,6 +10,7 @@ import {
   clearNoteId,
   setArticleLink,
 } from "../slices/slicesExport";
+import { current } from "@reduxjs/toolkit";
 
 const Modal = ({ hoverScaleAnimation }) => {
   const location = useLocation();
@@ -46,7 +47,6 @@ const Modal = ({ hoverScaleAnimation }) => {
   const createNote = () => {
     if (noteTitle !== "" && noteText !== "" && link !== "") {
       linkCheck();
-      console.log(link);
       Axios.post(`https://notly-app.herokuapp.com/${currentPath}`, {
         title: noteTitle,
         text: noteText,
@@ -63,13 +63,15 @@ const Modal = ({ hoverScaleAnimation }) => {
   };
 
   const linkCheck = () => {
-    if (
-      inputLinkRef.current.value.includes("https://") ||
-      inputLinkRef.current.value.includes("http://")
-    ) {
-      link = inputLinkRef.current.value;
-    } else {
-      link = `https://${inputLinkRef.current.value}`;
+    if (currentPath === "articles") {
+      if (
+        inputLinkRef.current.value.includes("https://") ||
+        inputLinkRef.current.value.includes("http://")
+      ) {
+        link = inputLinkRef.current.value;
+      } else {
+        link = `https://${inputLinkRef.current.value}`;
+      }
     }
   };
 
@@ -120,7 +122,9 @@ const Modal = ({ hoverScaleAnimation }) => {
       <div
         className={`relative h-1/3 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
         <div className="flex flex-col items-center justify-center h-full gap-8">
-          <p className="text-xl font-bold">Make new note</p>
+          <p className="text-xl font-bold">
+            Make new {currentPath.slice(0, -1)}
+          </p>
           <input
             className="w-9/12 rounded-md p-2"
             type="text"
