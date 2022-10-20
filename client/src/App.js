@@ -54,6 +54,16 @@ function App() {
     } else {
       dispatch(notesColor());
       dispatch(notesPage());
+      articlesRef.current.classList.remove(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
+      noteRef.current.classList.add(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
     }
   });
 
