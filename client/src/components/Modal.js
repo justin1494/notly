@@ -10,11 +10,11 @@ import {
   clearNoteId,
   setArticleLink,
 } from "../slices/slicesExport";
-import { current } from "@reduxjs/toolkit";
 
 const Modal = ({ hoverScaleAnimation }) => {
   const location = useLocation();
-  const currentPath = location.pathname.slice(1);
+  const currentPath =
+  location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
 
   const modalHidden = useSelector((state) => state.modalHidden.value);
   const navColor = useSelector((state) => state.navColor.value);
@@ -31,6 +31,7 @@ const Modal = ({ hoverScaleAnimation }) => {
   const warningRef = React.useRef();
 
   let link;
+
 
   if (currentPath === "articles") {
     link = articleLink;
