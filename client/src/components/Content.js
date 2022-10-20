@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import uniqid from 'uniqid';
 
 import {
   addNotes,
@@ -73,7 +74,8 @@ const Content = () => {
           return (
             <div
               className="relative flex flex-col items-center gap-5 w-64 lg:w-80 h-fit pb-9 bg-white rounded-md "
-              data-id={note._id}>
+              data-id={note._id}
+              key={uniqid()}>
               <h2
                 className={`text-center p-2 text-md font-bold rounded-md w-full drop-shadow-md ${navColor}`}>
                 {note.title}
