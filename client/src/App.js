@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 // pages
 import Articles from "./pages/Articles";
 import Notes from "./pages/Notes";
@@ -19,18 +19,44 @@ function App() {
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
+  const noteRef = useRef();
+  const articlesRef = useRef();
+
   useEffect(() => {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
       dispatch(articlesPage());
+      // articlesRef.current.classList.toggle('border-solid border-2 border-sky-500')
+
+      articlesRef.current.classList.add(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
+      noteRef.current.classList.remove(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
     } else if (location.pathname === "/notes") {
       dispatch(notesColor());
       dispatch(notesPage());
+      noteRef.current.classList.add(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
+      articlesRef.current.classList.remove(
+        "border-solid",
+        "border-2",
+        "border-slate-500"
+      );
     } else {
       dispatch(notesColor());
       dispatch(notesPage());
     }
   });
+
   const notesIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +89,7 @@ function App() {
   );
 
   const iconsStyles =
-    "flex flex-col sm:w-20 sm:h-28 items-center justify-center gap-2 sm:p-5 hover:scale-110 ease-in duration-200 sm:rounded-full hover:underline underline-offset-8 decoration-4 duration-150";
+    "flex flex-col sm:w-20 w-20 sm:h-28 items-center justify-center gap-2 sm:p-2 p-1 hover:scale-110 ease-in duration-200 sm:rounded-full ";
 
   const hoverScaleAnimation = "hover:scale-90 duration-300";
 
@@ -71,12 +97,18 @@ function App() {
     <>
       <nav>
         <div
-          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-0 gap-10 sm:pl-0 pl-6 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
-          <Link to="/notes" className={`${iconsStyles} decoration-green-200 `}>
+          className={`fixed transition-colors w-screen sm:w-24 sm:h-screen h-20 flex ${navColor} sm:gap-10 gap-5 sm:pl-0 pl-6 sm:flex-col bottom-0 z-10 items-center sm:justify-center justify-start`}>
+          <Link
+            ref={noteRef}
+            to="/notes"
+            className={`${iconsStyles} decoration-green-200 `}>
             {notesIcon}
             <p>Notes</p>
           </Link>
-          <Link to="/articles" className={`${iconsStyles} decoration-red-200`}>
+          <Link
+            ref={articlesRef}
+            to="/articles"
+            className={`${iconsStyles} decoration-red-200`}>
             {articlesIcon}
             <p>Articles</p>
           </Link>

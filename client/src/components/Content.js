@@ -134,7 +134,7 @@ const Content = () => {
       </div>
       <div className="mt-48 flex gap-10">
         <button
-          className={`fixed sm:bottom-14 bottom-4 sm:left-36 right-5 w-max sm:border-none border-solid border-white	border-4	${hoverScaleAnimation} p-2 px-4 rounded-md ${navColor} z-20`}
+          className={`fixed sm:bottom-14 bottom-4 sm:left-36 right-5 w-max sm:border-none border-solid border-white	border-4 sm:text-base text-sm ${hoverScaleAnimation} p-2 px-4 rounded-md ${navColor} z-20 `}
           onClick={() => {
             showModalHandler();
             dispatch(addNoteTitle(""));
