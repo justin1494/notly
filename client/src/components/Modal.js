@@ -120,8 +120,8 @@ const Modal = ({ hoverScaleAnimation }) => {
     <div
       className={`${modalHidden} fixed flex justify-center items-center left-0 top-0 h-full w-full sm:pl-28 bg-black/50 `}>
       <div
-        className={`relative h-1/3 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md`}>
-        <div className="flex flex-col items-center justify-center h-full gap-8">
+        className={`relative h-3/4 sm:h-1/3 w-10/12 md:w-1/2 xl:w-3/12 ${navColor} rounded-md `}>
+        <div className="flex flex-col items-center justify-center h-full gap-8 sm:py-5">
           <p className="text-xl font-bold">
             Make new {currentPath.slice(0, -1)}
           </p>
@@ -136,7 +136,7 @@ const Modal = ({ hoverScaleAnimation }) => {
             }}
           />
           <textarea
-            className="w-9/12 rounded-md p-2"
+            className=" h-1/3 w-9/12 rounded-md p-2"
             type="text"
             placeholder="Note Text..."
             ref={inputTextRef}
@@ -166,7 +166,7 @@ const Modal = ({ hoverScaleAnimation }) => {
               onClick={() => {
                 createNote();
               }}>
-              Create Note
+              Create {currentPath.slice(0, -1)}
             </button>
           ) : (
             <button
@@ -177,7 +177,7 @@ const Modal = ({ hoverScaleAnimation }) => {
                 handleModalInputClear();
                 dispatch(clearNoteId());
               }}>
-              Update Note
+              Update {currentPath.slice(0, -1)}
             </button>
           )}
         </div>
