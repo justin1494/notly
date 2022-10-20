@@ -22,48 +22,26 @@ function App() {
   const noteRef = useRef();
   const articlesRef = useRef();
 
+  const navCircle = ["border-solid", "border-2", "border-slate-500"];
+
   useEffect(() => {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
       dispatch(articlesPage());
       // articlesRef.current.classList.toggle('border-solid border-2 border-sky-500')
 
-      articlesRef.current.classList.add(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
-      noteRef.current.classList.remove(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
+      articlesRef.current.classList.add(navCircle);
+      noteRef.current.classList.remove(navCircle);
     } else if (location.pathname === "/notes") {
       dispatch(notesColor());
       dispatch(notesPage());
-      noteRef.current.classList.add(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
-      articlesRef.current.classList.remove(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
+      noteRef.current.classList.add(navCircle);
+      articlesRef.current.classList.remove(navCircle);
     } else {
       dispatch(notesColor());
       dispatch(notesPage());
-      articlesRef.current.classList.remove(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
-      noteRef.current.classList.add(
-        "border-solid",
-        "border-2",
-        "border-slate-500"
-      );
+      articlesRef.current.classList.remove(navCircle);
+      noteRef.current.classList.add(navCircle);
     }
   });
 
