@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // import Routes
 const notesRoute = require("./routes/notes");
-const articlesRoute = require("./routes/articles")
+const articlesRoute = require("./routes/articles");
 
 // middleveares
 app.use(express.json());
@@ -18,7 +18,6 @@ app.use("/articles", articlesRoute);
 // connect to DB
 mongoose.connect(process.env.DB_CONNECTION);
 
-
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("server is running");
 });
