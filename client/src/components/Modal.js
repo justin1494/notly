@@ -36,7 +36,7 @@ const Modal = ({ hoverScaleAnimation }) => {
   }
 
   const handleNotesUpdate = () => {
-    Axios.get(`https://notly-app.herokuapp.com//${currentPath}`).then(
+    Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
       (response) => {
         dispatch(addNotes(response.data || 0));
       }
@@ -44,9 +44,10 @@ const Modal = ({ hoverScaleAnimation }) => {
   };
 
   const createNote = () => {
-    linkCheck();
     if (noteTitle !== "" && noteText !== "" && link !== "") {
-      Axios.post(`https://notly-app.herokuapp.com//${currentPath}`, {
+      linkCheck();
+      console.log(link);
+      Axios.post(`https://notly-app.herokuapp.com/${currentPath}`, {
         title: noteTitle,
         text: noteText,
         link: link,
@@ -75,7 +76,7 @@ const Modal = ({ hoverScaleAnimation }) => {
   const updateNote = () => {
     linkCheck();
     Axios.patch(
-      `https://notly-app.herokuapp.com//${currentPath}/${noteId}`,
+      `https://notly-app.herokuapp.com/${currentPath}/${noteId}`,
       currentPath === "articles"
         ? {
             title: inputTitleRef.current.value,

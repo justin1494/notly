@@ -40,7 +40,7 @@ const Content = () => {
   );
 
   const handleNotesUpdate = () => {
-    Axios.get(`https://notly-app.herokuapp.com//${currentPath}`).then(
+    Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
       (response) => {
         dispatch(addNotes(response.data || 0));
       }
@@ -55,7 +55,7 @@ const Content = () => {
 
   const deleteNote = (noteId) => {
     Axios.delete(
-      `https://notly-app.herokuapp.com//${currentPath}/${noteId}`
+      `https://notly-app.herokuapp.com/${currentPath}/${noteId}`
     ).then(() => handleNotesUpdate());
   };
 
