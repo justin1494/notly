@@ -51,7 +51,6 @@ const Content = () => {
   useEffect(() => {
     dispatch(addNotes([]));
     handleNotesUpdate();
-    console.log('fire')
   },[]);
 
   const deleteNote = (noteId) => {
