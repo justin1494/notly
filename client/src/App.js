@@ -22,26 +22,36 @@ function App() {
   const noteRef = useRef();
   const articlesRef = useRef();
 
-  const navCircle = ["border-solid", "border-2", "border-slate-500"];
-
   useEffect(() => {
+    const borderStyle = "border-solid";
+    const borderWidth = "border-2";
+    const borderColor = "border-slate-500";
+
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
       dispatch(articlesPage());
       // articlesRef.current.classList.toggle('border-solid border-2 border-sky-500')
 
-      articlesRef.current.classList.add(navCircle);
-      noteRef.current.classList.remove(navCircle);
+      articlesRef.current.classList.add(borderStyle, borderWidth, borderColor);
+      noteRef.current.classList.remove(borderStyle, borderWidth, borderColor);
     } else if (location.pathname === "/notes") {
       dispatch(notesColor());
       dispatch(notesPage());
-      noteRef.current.classList.add(navCircle);
-      articlesRef.current.classList.remove(navCircle);
+      noteRef.current.classList.add(borderStyle, borderWidth, borderColor);
+      articlesRef.current.classList.remove(
+        borderStyle,
+        borderWidth,
+        borderColor
+      );
     } else {
       dispatch(notesColor());
       dispatch(notesPage());
-      articlesRef.current.classList.remove(navCircle);
-      noteRef.current.classList.add(navCircle);
+      articlesRef.current.classList.remove(
+        borderStyle,
+        borderWidth,
+        borderColor
+      );
+      noteRef.current.classList.add(borderStyle, borderWidth, borderColor);
     }
   });
 
