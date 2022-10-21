@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import uniqid from 'uniqid';
+import uniqid from "uniqid";
 
 import {
   addNotes,
@@ -49,10 +49,10 @@ const Content = () => {
   };
 
   useEffect(() => {
-    // first it makes listOfNotes a blank array, then handleNotesUpdate takes care of updating listOfNotes. Thanks to that, there is no "lag", after changing pages.
     dispatch(addNotes([]));
     handleNotesUpdate();
-  }, []);
+    console.log('fire')
+  },[]);
 
   const deleteNote = (noteId) => {
     Axios.delete(
@@ -66,9 +66,18 @@ const Content = () => {
 
   const hoverScaleAnimation = "hover:scale-90 duration-300";
 
+  const isLoading = (
+    <p className="text-4xl text-center mt-24 color-white">data is loading</p>
+  );
+
   return (
     <>
-      <h1 className="text-center mb-10 text-4xl text-slate-300">{currentPath}</h1>
+      <h1 className="text-center mb-10 text-4xl text-slate-300">
+        {currentPath}
+      </h1>
+
+      {listOfNotes.length === 0 && isLoading}
+
       <div className="flex h-full w-full sm:justify-start justify-center items-start gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
           return (
@@ -132,6 +141,7 @@ const Content = () => {
           );
         })}
       </div>
+
       <div className="mt-48 flex gap-10">
         <button
           className={`fixed sm:bottom-14 bottom-4 sm:left-36 right-5 w-max sm:border-none border-solid border-white	border-4 sm:text-base text-sm ${hoverScaleAnimation} p-2 px-4 rounded-md ${navColor} z-20 `}

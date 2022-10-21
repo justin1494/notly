@@ -1,13 +1,12 @@
 import React from "react";
-import Note from "../components/Note";
+import Content from "../components/Content";
 import Modal from "../components/Modal";
 
-const Notes = ({hoverScaleAnimation}) => {
-
+const Notes = ({ hoverScaleAnimation }) => {
   return (
     <>
-      <Note className="flex justify-center" />
-      <Modal hoverScaleAnimation={hoverScaleAnimation}/>
+      <Content className="flex justify-center" />
+      <Modal hoverScaleAnimation={hoverScaleAnimation} />
     </>
   );
 };

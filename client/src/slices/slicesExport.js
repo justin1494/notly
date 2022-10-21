@@ -8,6 +8,7 @@ import { addNoteTitle } from "./noteTitleSlice";
 import { notesPage, articlesPage } from "./currentPageSlice";
 import { setArticleLink } from "./articleLinkSlice";
 
+
 export {
   addArticle,
   addNotes,

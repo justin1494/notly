@@ -30,8 +30,6 @@ function App() {
     if (location.pathname === "/articles") {
       dispatch(articlesColor());
       dispatch(articlesPage());
-      // articlesRef.current.classList.toggle('border-solid border-2 border-sky-500')
-
       articlesRef.current.classList.add(borderStyle, borderWidth, borderColor);
       noteRef.current.classList.remove(borderStyle, borderWidth, borderColor);
     } else if (location.pathname === "/notes") {
@@ -87,7 +85,7 @@ function App() {
   );
 
   const iconsStyles =
-    "flex flex-col sm:w-20 w-20 sm:h-28 items-center justify-center gap-2 sm:p-2 p-1 hover:scale-110 ease-in duration-200 sm:rounded-full ";
+    "flex flex-col sm:w-20 w-20 sm:h-28 items-center justify-center gap-2 sm:p-2 p-1 ease-in duration-100 sm:rounded-full ";
 
   const hoverScaleAnimation = "hover:scale-90 duration-300";
 

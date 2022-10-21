@@ -12,13 +12,10 @@ export const currentPageSlice = createSlice({
     articlesPage: state => {
         state.value = 'articles'
     },
-    tweetsPage: state => {
-        state.value = 'tweets'
-    }
   },
 });
 
 // // Action creators are generated for each case reducer function
-export const { notesPage, articlesPage, tweetsPage } = currentPageSlice.actions;
+export const { notesPage, articlesPage } = currentPageSlice.actions;
 
 export default currentPageSlice.reducer;
