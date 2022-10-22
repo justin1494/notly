@@ -34,7 +34,7 @@ const Modal = ({ hoverScaleAnimation }) => {
 
 
   if (currentPath === "articles") {
-    link = articleLink;
+     link = articleLink;
   }
 
   const handleNotesUpdate = () => {
@@ -51,7 +51,7 @@ const Modal = ({ hoverScaleAnimation }) => {
       Axios.post(`https://notly-app.herokuapp.com/${currentPath}`, {
         title: noteTitle,
         text: noteText,
-        link: link,
+        link,
       })
         .then(() => handleNotesUpdate())
         .then(() => dispatch(setModalHidden("hidden")))

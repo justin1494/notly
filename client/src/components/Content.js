@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -22,6 +22,8 @@ const Content = () => {
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   // icons
 
   const xMark = (
@@ -44,6 +46,8 @@ const Content = () => {
     Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
       (response) => {
         dispatch(addNotes(response.data || 0));
+        setIsLoaded(true);
+        response.data.length === 0 && console.log("nie ma nic w bazie danych");
       }
     );
   };
@@ -51,7 +55,7 @@ const Content = () => {
   useEffect(() => {
     dispatch(addNotes([]));
     handleNotesUpdate();
-  },[]);
+  }, []);
 
   const deleteNote = (noteId) => {
     Axios.delete(
@@ -75,7 +79,7 @@ const Content = () => {
         {currentPath}
       </h1>
 
-      {listOfNotes.length === 0 && isLoading}
+      {isLoaded === false && isLoading}
 
       <div className="flex h-full w-full sm:justify-start justify-center items-start gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
