@@ -18,13 +18,41 @@ const Content = () => {
   const currentPath =
     location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
 
+  // REDUX
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
   const navColor = useSelector((state) => state.navColor.value);
   const dispatch = useDispatch();
 
+  // React state
   const [isLoaded, setIsLoaded] = useState(false);
+  const [noDataToDisplay, setNoDataToDisplay] = useState(false);
 
-  // icons
+  const handleNotesUpdate = () => {
+    Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
+      (response) => {
+        dispatch(addNotes(response.data || 0));
+        setIsLoaded(true);
+        response.data.length === 0
+          ? setNoDataToDisplay(true)
+          : setNoDataToDisplay(false);
+      }
+    );
+  };
+
+  const deleteNote = (noteId) => {
+    Axios.delete(
+      `https://notly-app.herokuapp.com/${currentPath}/${noteId}`
+    ).then(() => handleNotesUpdate());
+  };
+
+  const showModalHandler = () => {
+    dispatch(setModalHidden(""));
+  };
+
+  useEffect(() => {
+    dispatch(addNotes([]));
+    handleNotesUpdate();
+  }, []);
 
   const xMark = (
     <svg
@@ -42,36 +70,7 @@ const Content = () => {
     </svg>
   );
 
-  const handleNotesUpdate = () => {
-    Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
-      (response) => {
-        dispatch(addNotes(response.data || 0));
-        setIsLoaded(true);
-        response.data.length === 0 && console.log("nie ma nic w bazie danych");
-      }
-    );
-  };
-
-  useEffect(() => {
-    dispatch(addNotes([]));
-    handleNotesUpdate();
-  }, []);
-
-  const deleteNote = (noteId) => {
-    Axios.delete(
-      `https://notly-app.herokuapp.com/${currentPath}/${noteId}`
-    ).then(() => handleNotesUpdate());
-  };
-
-  const showModalHandler = () => {
-    dispatch(setModalHidden(""));
-  };
-
   const hoverScaleAnimation = "hover:scale-90 duration-300";
-
-  const isLoading = (
-    <p className="text-4xl text-center mt-24 color-white">data is loading</p>
-  );
 
   return (
     <>
@@ -79,7 +78,17 @@ const Content = () => {
         {currentPath}
       </h1>
 
-      {isLoaded === false && isLoading}
+      {isLoaded === false && (
+        <p className="text-4xl text-center mt-24 text-slate-400">
+          Data is loading
+        </p>
+      )}
+
+      {noDataToDisplay === true && (
+        <p className="text-4xl text-center mt-24 text-slate-400">
+          You have no saved {currentPath}
+        </p>
+      )}
 
       <div className="flex h-full w-full sm:justify-start justify-center items-start gap-10 flex-wrap drop-shadow-md">
         {listOfNotes.map((note) => {
