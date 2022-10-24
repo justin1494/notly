@@ -1,11 +1,13 @@
 # NOTLY
 
-## Your notes and saved articles in one place
+## App that displays your notes and saved articles in one place
 
 ### Technologies used:
 
 - **Ract.js**
-- **Redux Toolkit
+- **Redux Toolkit**
 - **tailwindcss**
 
-Server is hosted on Heroku, and frontend is hosted on Netlify
+Server is hosted on **Heroku**, and frontend is hosted on **Netlify**
+
+**LINK:** https://magenta-marshmallow-a93473.netlify.app/
