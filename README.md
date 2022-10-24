@@ -4,8 +4,8 @@
 
 ### Technologies used:
 
-- Ract.js
+- **Ract.js
 - Redux Toolkit
-- tailwindcss
+- tailwindcss**
 
-server is hosted on Heroku, and frontend is hosted on Netlify
+Server is hosted on Heroku, and frontend is hosted on Netlify
