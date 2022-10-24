@@ -9,12 +9,13 @@ import {
   addNotes,
   clearNoteId,
   setArticleLink,
+  setDataToDisplay,
 } from "../slices/slicesExport";
 
 const Modal = ({ hoverScaleAnimation }) => {
   const location = useLocation();
   const currentPath =
-  location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
+    location.pathname.slice(1) === "" ? "notes" : location.pathname.slice(1);
 
   const modalHidden = useSelector((state) => state.modalHidden.value);
   const navColor = useSelector((state) => state.navColor.value);
@@ -32,9 +33,8 @@ const Modal = ({ hoverScaleAnimation }) => {
 
   let link;
 
-
   if (currentPath === "articles") {
-     link = articleLink;
+    link = articleLink;
   }
 
   const handleNotesUpdate = () => {
@@ -52,12 +52,14 @@ const Modal = ({ hoverScaleAnimation }) => {
         title: noteTitle,
         text: noteText,
         link,
-      })
-        .then(() => handleNotesUpdate())
-        .then(() => dispatch(setModalHidden("hidden")))
-        .then(() => handleModalInputClear())
-        .then(() => dispatch(clearNoteId()))
-        .then(() => warningRef.current.classList.add("invisible"));
+      }).then(() => {
+        handleNotesUpdate();
+        dispatch(setModalHidden("hidden"));
+        handleModalInputClear();
+        dispatch(clearNoteId());
+        warningRef.current.classList.add("invisible");
+        dispatch(setDataToDisplay(false));
+      });
     } else {
       warningRef.current.classList.remove("invisible");
     }

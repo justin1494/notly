@@ -11,6 +11,7 @@ import {
   addNoteId,
   setModalHidden,
   setArticleLink,
+  setDataToDisplay,
 } from "../slices/slicesExport";
 
 const Content = () => {
@@ -21,11 +22,12 @@ const Content = () => {
   // REDUX
   const listOfNotes = useSelector((state) => state.listOfNotes.value);
   const navColor = useSelector((state) => state.navColor.value);
+  const dataToDisplay = useSelector((state) => state.dataToDisplay.value);
   const dispatch = useDispatch();
 
   // React state
   const [isLoaded, setIsLoaded] = useState(false);
-  const [noDataToDisplay, setNoDataToDisplay] = useState(false);
+  // const [noDataToDisplay, setNoDataToDisplay] = useState(false);
 
   const handleNotesUpdate = () => {
     Axios.get(`https://notly-app.herokuapp.com/${currentPath}`).then(
@@ -33,8 +35,8 @@ const Content = () => {
         dispatch(addNotes(response.data || 0));
         setIsLoaded(true);
         response.data.length === 0
-          ? setNoDataToDisplay(true)
-          : setNoDataToDisplay(false);
+          ? dispatch(setDataToDisplay(true))
+          : dispatch(setDataToDisplay(false));
       }
     );
   };
@@ -103,7 +105,7 @@ const Content = () => {
         </div>
       )}
 
-      {noDataToDisplay === true && (
+      {dataToDisplay === true && (
         <p className="text-4xl text-center mt-24 text-slate-400">
           You have no saved {currentPath}
         </p>

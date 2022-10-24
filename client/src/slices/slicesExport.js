@@ -7,7 +7,7 @@ import { addNoteText } from "./noteTextSlice";
 import { addNoteTitle } from "./noteTitleSlice";
 import { notesPage, articlesPage } from "./currentPageSlice";
 import { setArticleLink } from "./articleLinkSlice";
-
+import { setDataToDisplay } from "./dataToDisplaySlice";
 
 export {
   addArticle,
@@ -22,4 +22,5 @@ export {
   notesPage,
   articlesPage,
   setArticleLink,
+  setDataToDisplay,
 };
